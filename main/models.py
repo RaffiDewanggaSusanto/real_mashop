@@ -9,15 +9,18 @@ class Product(models.Model):
         ('thumbnail', 'Thumbnail'),
         ('category', 'Category'),
         ('is_featured', 'Is_featured'),
+        ('rating', 'Rating'),
     ]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
+    name = models.CharField()
     price = models.IntegerField()
     description = models.TextField()
     thumbnail = models.URLField()
     category = models.CharField()
     is_featured = models.BooleanField()
+    rating = models.IntegerField()
+
     
     def __str__(self):
         return self.title
