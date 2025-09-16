@@ -36,3 +36,39 @@ Django sering dipilih untuk permulaan pembelajaran pengembangan perangkat lunak 
 
 # Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
 Untuk tutorial menurut saya cukup mudah dimengerti, setiap langkah dijelaskan dengan cukup rinci dan diberikan contoh image pada beberapa step untuk mempermudah pengerjaan tutorial.
+
+# Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+Kita memerlukan data delivery dalam pengimplementasikan sebuah platform karena data delivery memungkinkan pertukaran informasi antara server dan client. Data perlu dikirim dari satu stack ke stack lainnya, perlu dipastikan bagian-bagian dari sistem dapat saling berkomunikasi. Data delivery dapat dilakukan dengan format html, json, dan xml.
+
+# Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+Menurut saya JSON lebih baik dan lebih populer dari XML karena JSON lebih mudah untuk dibaca oleh manusia. Sintaks pada JSON lebih sederhana dibandingkan XML. JSON menggunakan format key: value sedangkan XML dibutuhkan tag pembuka dan penutup untuk setiap element data. JSON juga memiliki ukuran data yang lebih kecil dan lebih mudah diproses oleh JavaScript.
+
+# Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+Fungsi dari method is_valid pada views.py adalah untuk melakukan validasi data yang dikirim oleh user ke dalam form valid atau tidak. Method ini akan memeriksa apakah semua field form sudah terisi dengan benar sesuai dengan aturannya dan sesuai dengan kebutuhan, sehingga dapat mencegah error. Kita membutuhkan method ini karena is_valid() dapat meningkatkan keamanan dan digunakan untuk automasi validasi sehingga tidak perlu dilakukan validasi manual.
+
+# Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+Kita membutuhkan csrf_token saat membuat form di Django untuk melindungi aplikasi yang dibuat dari serangan CSRF (Cross Site Request Forgery) dimana penyerang akan memanfaatkan sesi user yang sedang login untuk beraksi tanpa pengetahuan user. csrf_token digunakan untuk memberikan akses ke url yang dideploy.
+
+Jika csrf_token tidak digunakan pada form Django,aplikasi akan rentan terhadap serangan CSRF. Penyerang bisa membuat form palsu yang kemudian akan mengirim request ke aplikasi menggunakan sesi user yang sedang melakukan login sehingga data dapat diubah.
+
+Penyerang dapat memanfaatkan hal ini untuk merubah password, mengirim uang ke rekening tak dikenal mengatasnamakan user, dan menghapus data. csrf_token dapat mencegah hal ini dengan memverifikasi setiap request form sehingga yang diproses hanyalah request yang sah.
+
+# Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+- Pertama, saya mengaktifkan virtual environment agar versi dari code yang kita gunakan sesuai dengan proyek yang sedang dibuat.
+- Kemudian saya mengisi DIRS pada file settings.py dengan BASE_DIR / 'templates' agar terhubung dengan proyek dan mengubah APP_DIRS menjadi true agar templates milik app diprioritaskan.
+- Lalu saya menambahkan 
+{% extends 'base.html' %}
+{% block content %}
+{% endblock content %}
+pada file main.html pada direktori templates.
+- Lalu saya membuat forms.py sebagai form untuk menerima data product yang ditambahkan yang akan ditampilkan pada halaman utama.
+- Lalu pada file views.py ditambahkan import baru untuk menambahkan function-function baru seperti create_product dan show_product.
+- Lalu pada main.html ditambahkan code untuk tombol "Add Product", thumbnails, dan description product. 
+- Pada direktori templates ditambahkan file create_product.html dan product_detail.html. create_product.html digunakan untuk menambahkan produk-produk baru. product_detail.html digunakan untuk menampilkan kategori, harga, gambar, dan deskripsi dari produk ketika pengguna mengklik tombol read more.
+- Lalu pada views.py saya mengimport seralizers dan httpresponse untuk menambahkan function-function lagi agar data dapat dikembalikan dalam bentuk XML dan JSON.
+- Pada urls.py ditambahkan import function-function yang telah dibuat dan menambahkan pathnya. Hal ini dilakukan untuk XML, JSON, XML by id, dan JSON by id.
+- Terakhir saya mengecek apakah semuanya sudah sesuai dengan menjalankan localhost dan menambahkan product baru dan menggunakan postman untuk mengecek hasil dari step-step sebelumnya.
+- Terakhir saya melakukan commit pada github dan pws.
+
+# Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+Menurut saya tutorial yang diberikan sudah cukup baik dan jelas. Asdos juga sangat responsif dalam membantu kami ketika ada masalah dalam pengerjaan tugas.
