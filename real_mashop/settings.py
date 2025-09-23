@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "raffi-dewangga-realmashop.pbp.cs.ui.ac.id"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://raffi-dewangga-realmashop.pbp.cs.ui.ac.id/"
+    "https://raffi-dewangga-realmashop.pbp.cs.ui.ac.id"
 ]
 
 # Application definition
