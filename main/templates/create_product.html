@@ -1,18 +1,92 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
+{% block meta %}
+<title>Real Mashop — Create Product</title>
+{% endblock meta %}
+
 {% block content %}
-<h1>Add Product</h1>
+<div class="bg-[#000000] w-full min-h-screen pt-16">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-<form method="POST">
-  {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-    <tr>
-      <td></td>
-      <td>
-        <input type="submit" value="Add PRODUCT" />
-      </td>
-    </tr>
-  </table>
-</form>
+    <!-- Back / Heading -->
+    <div class="flex items-center justify-between mb-6">
+      <a href="{% url 'main:show_main' %}"
+         class="text-white/80 hover:text-[#f0b414] transition-colors">← Back to Product</a>
+    </div>
 
-{% endblock %}
+    <!-- 2-column: Form + Side panel -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- LEFT: FORM -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-2xl border border-[#000000] shadow-sm overflow-hidden">
+          <div class="px-6 sm:px-8 py-6 border-b border-[#000000]/10">
+            <h1 class="text-2xl font-bold text-[#000000]">Create New Product</h1>
+            <p class="text-sm text-[#0050a0]">Post your product to the market</p>
+          </div>
+
+          <form method="POST" class="px-6 sm:px-8 py-6 space-y-6">
+            {% csrf_token %}
+
+            {% for field in form %}
+              <div>
+                <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-[#000000] mb-2">
+                  {{ field.label }}
+                </label>
+
+                <!-- unified field styles -->
+                <div class="w-full [&>input]:w-full [&>textarea]:w-full [&>select]:w-full
+                            [&>input]:px-4 [&>textarea]:px-4 [&>select]:px-4
+                            [&>input]:py-3 [&>textarea]:py-3 [&>select]:py-3
+                            [&>input]:border [&>textarea]:border [&>select]:border
+                            [&>input]:border-[#000000] [&>textarea]:border-[#000000] [&>select]:border-[#000000]
+                            [&>input]:rounded-lg [&>textarea]:rounded-lg [&>select]:rounded-lg
+                            [&>input]:focus:outline-none [&>textarea]:focus:outline-none [&>select]:focus:outline-none
+                            [&>input]:focus:border-[#0050a0] [&>textarea]:focus:border-[#0050a0] [&>select]:focus:border-[#0050a0]
+                            [&>input]:focus:ring-4 [&>textarea]:focus:ring-4 [&>select]:focus:ring-4
+                            [&>input]:focus:ring-[#0050a0]/20 [&>textarea]:focus:ring-[#0050a0]/20 [&>select]:focus:ring-[#0050a0]/20">
+                  {{ field }}
+                </div>
+
+                {% if field.help_text %}
+                  <p class="mt-2 text-xs text-[#f0b414]">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                  <p class="mt-2 text-xs text-[#f03c50]">{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endfor %}
+
+            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-[#000000]/10">
+              <a href="{% url 'main:show_main' %}"
+                 class="order-2 sm:order-1 px-6 py-3 border border-[#000000] text-[#000000] rounded-lg font-medium
+                        hover:bg-[#f0b414] hover:text-[#000000] transition-colors text-center">
+                Cancel
+              </a>
+
+              <button type="submit"
+                      class="order-1 sm:order-2 flex-1 bg-[#0050a0] text-white px-6 py-3 rounded-lg font-medium
+                             hover:bg-[#f0b414] hover:text-[#000000] hover:shadow-xl hover:ring-4 hover:ring-[#0050a0]/30
+                             transform hover:scale-[1.01] transition">
+                Publish Product
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- RIGHT: SIDE PANEL (tips saja) -->
+      <aside class="space-y-6">
+        <!-- Tips card -->
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 text-white min-h-[250px]">
+          <h2 class="text-lg font-semibold mb-2">Tips</h2>
+          <ul class="list-disc list-inside text-sm text-white/90 space-y-1">
+            <li>Gunakan nama product yang menarik.</li>
+            <li>Tambahkan deskripsi yang menjelaskan produk.</li>
+            <li>Gunakan gambar yang jernih dan jelas.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+{% endblock content %}

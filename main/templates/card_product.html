@@ -1,0 +1,81 @@
+<article
+  class="group relative bg-white rounded-xl border border-[#000000]/20 hover:border-[#0050a0]
+         shadow-sm hover:shadow-xl transform hover:scale-105 transition-all duration-300 
+         overflow-hidden hover:ring-4 hover:ring-[#0050a0]/40"
+>
+  <!-- Thumbnail -->
+  <div class="aspect-[16/9] relative overflow-hidden">
+    {% if product.thumbnail %}
+      <img
+        src="{{ product.thumbnail }}"
+        alt="{{ product.title }}"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        loading="lazy"
+      >
+    {% else %}
+      <div class="w-full h-full bg-[#f1c814]"></div>
+    {% endif %}
+
+    <!-- Category -->
+    <div class="absolute top-3 left-3">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium text-white
+                    bg-gradient-to-r from-[#0050a0] to-[#00a6ff] shadow-sm">
+        {{ product.get_category_display }}
+      </span>
+    </div>
+
+    <!-- Status -->
+    <div class="absolute top-3 right-3 flex space-x-2">
+      {% if product.is_featured %}
+        <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-medium bg-[#f0b414] text-black">Featured</span>
+      {% endif %}
+      {% if product.is_product_hot %}
+        <span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-medium bg-[#f03c50] text-white">Hot</span>
+      {% endif %}
+    </div>
+
+    <!-- Seluruh kartu bisa diklik -->
+    <a href="{% url 'main:show_product' product.id %}" class="absolute inset-0" aria-label="Open {{ product.title }}"></a>
+  </div>
+
+  <!-- Content -->
+  <div class="p-5 bg-white text-black">
+    <div class="flex items-center text-xs text-gray-500 mb-2">
+      <time datetime="{{ product.created_at|date:'c' }}">{{ product.created_at|date:"M j, Y" }}</time>
+      <span class="mx-2">•</span>
+      <span>{{ product.views }} views</span>
+    </div>
+
+    <h3 class="text-base sm:text-lg font-semibold text-[#000000] mb-2 line-clamp-2 leading-snug">
+      <a href="{% url 'main:show_product' product.id %}" class="hover:text-[#0050a0] transition-colors">
+        {{ product.title }}
+      </a>
+    </h3>
+
+    {% if product.price %}
+        <p class="text-[#0050a0] font-bold text-lg mb-2">Rp {{ product.price }}</p>
+    {% endif %}
+
+    <p class="text-[#333333] text-sm leading-relaxed line-clamp-3">
+      {{ product.content|truncatewords:20 }}
+    </p>
+
+    {% if user.is_authenticated and product.user == user %}
+      <div class="flex items-center justify-between pt-4 mt-4 border-t border-[#000000]/10">
+        <a href="{% url 'main:show_product' product.id %}" class="text-[#0050a0] hover:text-[#f03c50] font-medium text-sm transition-colors">
+          Read more
+        </a>
+        <div class="flex space-x-3">
+          <a href="{% url 'main:edit_product' product.id %}" class="text-[#f0b414] hover:text-[#f1c814] text-sm transition-colors">Edit</a>
+          <a href="{% url 'main:delete_product' product.id %}" class="text-[#f03c50] hover:text-red-700 text-sm transition-colors">Delete</a>
+        </div>
+      </div>
+    {% else %}
+      <div class="pt-4 mt-4 border-t border-[#000000]/10">
+        <a href="{% url 'main:show_product' product.id %}" class="inline-flex items-center text-[#0050a0] hover:text-[#f03c50] font-medium text-sm transition-colors">
+          Read more →
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</article>

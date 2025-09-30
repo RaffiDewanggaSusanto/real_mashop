@@ -124,3 +124,38 @@ Sebenarnya cookies tidak aman dan memiliki beberapa risiko seperti pencurian coo
 - Kemudian fungsi show_main ditambahkan line untuk melakukan filter product yang ditampilkan apakah mau ditampilkan semua (dari setiap user) atau hanya yang dibuat oleh akun yang sedang login saja.
 - Ditambahkan tombol untuk melakukan filter tersebut di main.html dan ditampilkan juga nama pembuat halaman dari product masing-masing dengan menambahkan beberapa line di new_detail.html.
 - Terakhir dilakukan push dan commit ke git dan pws.
+
+# Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Dalam CSS, jika elemen HMTL memiliki lebih dari satu aturan, akan ditentukan aturan mana yang akan dipakai berdasarkan tingkat prioritasnya. Urutannya:
+- Inline style
+- Id selector
+- Class selector
+- Tag/element selector
+- Universal selector dan inheritance
+
+Jika dua aturan memiliki tingkat prioritas yang sama, maka aturan terakhir dalam CSS yang akan digunakan.
+
+# Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Responsive design menjadi konsep yang penting dalam pengembangan aplikasi web karena dengan responsive design maka tampilan dan fungsi-fungsi pada situs akan tetap berjalan normal dan menyesuaikan ukurannya secara fleksibel di berbagai ukuran layar, mau itu di smartphone, tablet, maupun desktop.
+
+Contoh aplikasi yang sudah menerapkan responsive design adalah Tokopedia dan Instagram dengan layout produk dan konten yang sudah secara otomatis menyesuaikan dengan perangkat yang digunakan. Yang belum menggunakan responsive design adalah situs-situs lama yang tulisannya terlalu kecil di smartphone.
+
+# Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Dalam CSS, margin adalah jarak paling luar antara elemen dengan elemen lainnya agar tidak menempel dengan elemen lainnya. Border adalah garis yang mengelilingi elemen, berada di antara margin dan padding. Padding adalah jarak antara isi elemen dengan garis tepi.
+
+Contoh implementasinya adalah
+margin: 20px;              
+border: 2px solid black;   
+padding: 15px;   
+
+Dengan contoh ini maka akan ada ruang kosong 20px di luar elemen, garis border setebal 2px, dan jarak 15px antara isi elemen dan garis tepinya.
+
+# Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Flexbox dan grid layout adalah alat bantu di CSS yang dapat digunakan untuk mengatur posisi dan ukuran elemen. Flexbox digunakan untuk mengatur elemen satu dimensi dan berfokus pada distribusi dan alignment, sedangkan grid layout digunakan untuk mengatur elemen dua dimensi dan berfokus pada struktur layout secara keseluruhan.
+
+# Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+- Pertama saya menambahkan tailwind terlebih dulu ke dalam aplikasi saya untuk melakukan styling pada aplikasi kedepannya dan agar aplikasi bisa menyesuaikan dengan perangkat mobile.
+- Lalu saya menambahkan fitur edit dan delete product pada aplikasi agar perubahan data pada aplikasi menjadi lebih mudah.
+- Kemudian saya menambahkan navigation bar dan melakukan konfigurasi static files serta menambahkan global.css untuk style css. Tidak lupa menghubungkan global.css dan tailwind ke base.html dan menambahkan custom styling ke global.css.
+- Lalu saya melakukan styling pada navbar, halaman login, halaman register, halaman home, halaman detail product, halaman tambah product, dan edit product.
+- Kemudian saya mencari referensi di internet untuk color pallete yang bagus untuk saya gunakan dan saya juga mencari inspirasi untuk layout serta hal-hal yang bisa saya masukkan ke aplikasi untuk mempercantiknya.

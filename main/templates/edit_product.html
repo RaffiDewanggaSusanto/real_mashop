@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Edit News - Football News</title>
+{% endblock meta %}
+
+{% block content %}
+<!-- Background Black -->
+<div class="bg-[#000000] w-full min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <div class="mb-6">
+      <a href="{% url 'main:show_main' %}" class="text-[#ffffff] hover:text-[#f0b414] font-medium transition-colors">
+        ← Back to News
+      </a>
+    </div>
+    
+    <!-- Form Card -->
+    <div class="bg-[#ffffff] rounded-lg border border-[#000000] p-6 sm:p-8 form-style shadow">
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold text-[#000000] mb-2">Edit News</h1>
+        <p class="text-[#0050a0]">Update your football news and stories</p>
+      </div>
+      
+      <form method="POST" class="space-y-6">
+        {% csrf_token %}
+        {% for field in form %}
+          <div>
+            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-[#000000] mb-2">
+              {{ field.label }}
+            </label>
+
+            <div class="w-full [&>input]:w-full [&>textarea]:w-full [&>select]:w-full
+                        [&>input]:px-4 [&>textarea]:px-4 [&>select]:px-4
+                        [&>input]:py-3 [&>textarea]:py-3 [&>select]:py-3
+                        [&>input]:border [&>textarea]:border [&>select]:border
+                        [&>input]:border-[#000000] [&>textarea]:border-[#000000] [&>select]:border-[#000000]
+                        [&>input]:rounded-md [&>textarea]:rounded-md [&>select]:rounded-md
+                        [&>input]:focus:outline-none [&>textarea]:focus:outline-none [&>select]:focus:outline-none
+                        [&>input]:focus:border-[#0050a0] [&>textarea]:focus:border-[#0050a0] [&>select]:focus:border-[#0050a0]
+                        [&>input]:focus:ring-2 [&>textarea]:focus:ring-2 [&>select]:focus:ring-2
+                        [&>input]:focus:ring-[#0050a0] [&>textarea]:focus:ring-[#0050a0] [&>select]:focus:ring-[#0050a0]">
+              {{ field }}
+            </div>
+
+            {% if field.help_text %}
+              <p class="mt-1 text-sm text-[#ffc814]">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+              <p class="mt-1 text-sm text-[#f03c50]">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+        
+        <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-[#0050a0]">
+          <a href="{% url 'main:show_main' %}" 
+             class="order-2 sm:order-1 px-6 py-3 border border-[#000000] text-[#000000] rounded-md font-medium hover:bg-[#f0b414] hover:text-[#000000] transition-colors text-center">
+            Cancel
+          </a>
+          <button type="submit" 
+                  class="order-1 sm:order-2 flex-1 bg-[#0050a0] text-white px-6 py-3 rounded-md font-medium hover:bg-[#f0b414] hover:text-[#000000] transition-colors">
+            Update News
+          </button>
+        </div>
+      </form>
+    </div> 
+    
+<div class="mt-8">
+  <div class="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 text-white min-h-[250px]">
+    <h2 class="text-lg font-semibold mb-2">Tips</h2>
+    <ul class="list-disc list-inside text-sm text-white/90 space-y-1">
+      <li>Gunakan nama product yang menarik.</li>
+      <li>Tambahkan deskripsi yang menjelaskan produk.</li>
+      <li>Gunakan gambar yang jernih dan jelas.</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
