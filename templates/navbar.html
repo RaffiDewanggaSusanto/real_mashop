@@ -9,15 +9,19 @@
         </h1>
       </div>
 
-      <!-- Desktop Navigation -->
+      {% if user.is_authenticated %}
+
       <div class="hidden md:flex items-center space-x-8">
         <a href="/" class="text-[#ffffff] hover:text-[#f0b414] font-medium transition-colors">
           Home
         </a>
+
         <a href="{% url 'main:create_product' %}" class="text-[#ffffff] hover:text-[#f0b414] font-medium transition-colors">
           Tambah Product
         </a>
       </div>
+      {% else %}
+      {% endif %}
 
       <!-- Desktop User Section -->
       <div class="hidden md:flex items-center space-x-6">

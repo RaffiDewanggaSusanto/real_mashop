@@ -24,7 +24,25 @@
             <p class="text-sm text-[#0050a0]">Post your product to the market</p>
           </div>
 
-          <form method="POST" class="px-6 sm:px-8 py-6 space-y-6">
+          <!-- AJAX states -->
+          <div id="ajax-loading" class="px-6 sm:px-8 py-6 text-center hidden">
+            <svg class="animate-spin h-6 w-6 text-[#0050a0] inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+            <p class="text-[#0050a0] mt-2">Publishing product...</p>
+          </div>
+          <div id="ajax-error" class="px-6 sm:px-8 py-6 text-center hidden">
+            <div class="text-[#f03c50] text-3xl mb-2">⚠️</div>
+            <p class="text-[#f03c50]">Failed to publish product. Please try again.</p>
+          </div>
+          <div id="ajax-success" class="px-6 sm:px-8 py-6 text-center hidden">
+            <div class="text-[#0050a0] text-3xl mb-2">✅</div>
+            <p class="text-[#0050a0]">Product published successfully!</p>
+            <a href="{% url 'main:show_main' %}" class="mt-4 inline-block px-6 py-3 bg-[#0050a0] text-white rounded-lg font-medium hover:bg-[#f0b414] hover:text-[#000000] transition">Back to Product List</a>
+          </div>
+
+          <form id="create-product-form" method="POST" class="px-6 sm:px-8 py-6 space-y-6">
             {% csrf_token %}
 
             {% for field in form %}
@@ -32,8 +50,6 @@
                 <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-[#000000] mb-2">
                   {{ field.label }}
                 </label>
-
-                <!-- unified field styles -->
                 <div class="w-full [&>input]:w-full [&>textarea]:w-full [&>select]:w-full
                             [&>input]:px-4 [&>textarea]:px-4 [&>select]:px-4
                             [&>input]:py-3 [&>textarea]:py-3 [&>select]:py-3
@@ -46,7 +62,6 @@
                             [&>input]:focus:ring-[#0050a0]/20 [&>textarea]:focus:ring-[#0050a0]/20 [&>select]:focus:ring-[#0050a0]/20">
                   {{ field }}
                 </div>
-
                 {% if field.help_text %}
                   <p class="mt-2 text-xs text-[#f0b414]">{{ field.help_text }}</p>
                 {% endif %}
@@ -62,7 +77,6 @@
                         hover:bg-[#f0b414] hover:text-[#000000] transition-colors text-center">
                 Cancel
               </a>
-
               <button type="submit"
                       class="order-1 sm:order-2 flex-1 bg-[#0050a0] text-white px-6 py-3 rounded-lg font-medium
                              hover:bg-[#f0b414] hover:text-[#000000] hover:shadow-xl hover:ring-4 hover:ring-[#0050a0]/30
@@ -89,4 +103,48 @@
     </div>
   </div>
 </div>
+
+<script>
+const form = document.getElementById('create-product-form');
+const loadingDiv = document.getElementById('ajax-loading');
+const errorDiv = document.getElementById('ajax-error');
+const successDiv = document.getElementById('ajax-success');
+
+// Show/hide AJAX states
+function showAjaxState(state) {
+    loadingDiv.classList.toggle('hidden', state !== 'loading');
+    errorDiv.classList.toggle('hidden', state !== 'error');
+    successDiv.classList.toggle('hidden', state !== 'success');
+    form.classList.toggle('hidden', state !== 'form');
+}
+
+// Initial state
+showAjaxState('form');
+
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    showAjaxState('loading');
+
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch("{% url 'main:create_product' %}", {
+            method: "POST",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create product');
+        }
+
+        const data = await response.json();
+        showAjaxState('success');
+    } catch (err) {
+        showAjaxState('error');
+    }
+});
+</script>
 {% endblock content %}
