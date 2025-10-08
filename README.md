@@ -159,3 +159,22 @@ Flexbox dan grid layout adalah alat bantu di CSS yang dapat digunakan untuk meng
 - Kemudian saya menambahkan navigation bar dan melakukan konfigurasi static files serta menambahkan global.css untuk style css. Tidak lupa menghubungkan global.css dan tailwind ke base.html dan menambahkan custom styling ke global.css.
 - Lalu saya melakukan styling pada navbar, halaman login, halaman register, halaman home, halaman detail product, halaman tambah product, dan edit product.
 - Kemudian saya mencari referensi di internet untuk color pallete yang bagus untuk saya gunakan dan saya juga mencari inspirasi untuk layout serta hal-hal yang bisa saya masukkan ke aplikasi untuk mempercantiknya.
+
+# Apa perbedaan antara synchronous request dan asynchronous request?
+Synchronous request adalah “blokir halaman”. Browser bakal kirim request → nunggu respons → baru render ulang seluruh halaman, selama menunggu, UI tidak bisa dipakai untuk aksi lain untuk konteks yang sama. Asynchronous request (AJAX/fetch) tidak memblokir. JavaScript mengirim request di belakang layar, halaman tetap interaktif, dan ketika respons datang kita hanya memperbarui bagian DOM tertentu (contohnya daftar produk) tanpa reload penuh lebih cepat secara perceived dan memungkinkan beberapa request berjalan bersamaan.
+
+# Bagaimana AJAX bekerja di Django (alur request–response)?
+- Event di front-end (klik tombol/submit form via JS).
+- JS fetch()/XHR ke URL Django (biasanya endpoint khusus, sering mengembalikan JSON atau HTML snippet) sambil menyertakan CSRF token.
+- URL di-urls.py memetakan ke view.
+- View memproses (validasi, DB CRUD) lalu return JsonResponse({...}) atau render partial template.
+- JS membaca status/respons, lalu memutakhirkan DOM (list, badge, toast) dan menangani error (show pesan, retry), tanpa reload halaman.
+
+# Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+Keuntungan AJAX dibanding render biasa adalah lebih hemat bandwidth (hanya mengirim data yang diperlukan saja), lantency terasa lebih rendah (partial update), UX lebih halus (loading state/optimistic update), mudah membuat UI real time ish (search/filter hidup, infinite scroll), dan arsitektur jadi terpisah (view mengembalikan data, front-end mengatur presentasi). Ini juga memudahkan reuse endpoint untuk beberapa UI (modal, halaman, widget) dibanding selalu render full template.
+
+# Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+Wajib aktifkan CSRF protection (sertakan token ke header X-CSRFToken saat POST), pakai HTTPS (hindari pencurian kredensial), lakukan validasi & sanitasi di server (bukan hanya di JS), batasi brute force (rate limiting, jeda, optional CAPTCHA), gunakan cookie session HttpOnly + Secure, matikan CSRF_TRUSTED_ORIGINS yang berlebihan, pastikan Same Origin Policy (jangan izinkan CORS sembarangan), lindungi dari session fixation (regenerasi sesi saat login), dan kirimkan pesan error yang generic agar tidak membocorkan apakah email/username valid.
+
+# Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+Situs terasa responsif, aksi cepat, tidak ada “kedip” reload penuh, dan pengguna mendapat feedback instan (spinner, skeleton, toast sukses/gagal). Form bisa validasi inline, daftar bisa disaring tanpa pindah halaman, dan perubahan data langsung muncul (optimistic UI) dengan fallback jika gagal. Hasilnya alur lebih lancar, beban kognitif berkurang, dan kepuasan meningkat asal tetap ada indikator proses, penanganan error yang jelas, serta aksesibilitas dijaga.
