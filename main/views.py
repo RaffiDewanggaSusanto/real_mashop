@@ -236,3 +236,27 @@ def add_product_entry_ajax(request):
     new_product.save()
 
     return HttpResponse(b"CREATED", status=201)
+
+@csrf_exempt
+@require_POST
+def edit_product_entry_ajax(request, id):
+    product = get_object_or_404(Product, pk=id)
+    
+    name = request.POST.get("name")
+    price = request.POST.get("price")
+    description = request.POST.get("description")
+    thumbnail = request.POST.get("thumbnail")
+    category = request.POST.get("category")
+    is_featured = request.POST.get("is_featured") == 'on'
+    rating = request.POST.get("rating")
+    
+    product.name = name
+    product.price = price
+    product.description = description
+    product.thumbnail = thumbnail
+    product.category = category
+    product.is_featured = is_featured
+    product.rating = rating
+    product.save()
+    
+    return HttpResponse(b"UPDATED", status=200)
